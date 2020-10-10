@@ -1,12 +1,31 @@
 #!/bin/bash
 
-# Variable needed 1-disk 2-pass_root 3-user 4-pass_user
-disk=$1
-pass_root="$2"
-user="$3"
-pass_user="$4"
+loadkeys fr
 
-loadkeys fr-latin1
+read -p "Enter your disk name : " disk
+read -p "Enter your user name : " user
+
+# Variable needed
+# IFS= read -r -> To read spaces characters
+until [[ "$a" = "$b" ]]; do
+    IFS= read -r -p "Create the Password for ROOT : " a
+    IFS= read -r -p "Retype Password for ROOT : " b
+done
+if [[ "$a" = "$b" ]]; then
+    pass_root="$a"
+    a="null"
+fi
+
+until [[ "$a" = "$b" ]]; do
+    read -p "Enter the User Name : " user
+    IFS= read -r -p "Create the Password for $user : " a
+    IFS= read -r -p "Retype Password for $user : " b
+done
+if [[ "$a" = "$b" ]]; then
+    pass_user="$a"
+    a="null"
+fi
+
 #passwd
 echo -e "$pass_root\n$pass_root" | passwd
 sed -i -e 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /etc/sudoers
