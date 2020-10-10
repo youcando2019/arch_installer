@@ -66,9 +66,10 @@ CONFIG_MICROCODE_AMD=y
 grub-mkconfig -o /boot/grub/grub.cfg
 
 sed -i -e 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepin-greeter/g' /etc/lightdm/lightdm.conf
-systemctl enable lightdm.service
+systemctl enable gdm.service
 systemctl enable wpa_supplicant.service
 systemctl enable NetworkManager.service
+systemctl enable bluetooth.service
 
 echo "[multilib]" >> /etc/pacman.conf
 echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
